@@ -1,4 +1,7 @@
 # Project4-slide-moveable
+In project used sass(scss), html and Js
+Tools: Webpack, babel
+Scss compilec to css by means of Live server plugin in Visual Studio Code
 
 ## Check npm version
 
