@@ -5,12 +5,12 @@ document.addEventListener("DOMContentLoaded", () => {
   const img1Element = document.querySelector(".slider__image-container--first img");
   const img2Element = document.querySelector(".slider__image-container--second img");
   let drugging = false; //przechowa nam dane że właśnie w tym momencie jak przysicne myszke ma sie przesuwać
-  const imagesContainerLeftOfset = imagesContainerElement.offsetLeft; //odsunięcie lewe krawędź slideraod ekranu
   const img1ContainerE = document.querySelector(".slider__image-container--first");
   const img2ContainerE = document.querySelector(".slider__image-container--second");
   const handleElement = document.querySelector(".slider__handle"); //to do przeciągania sliders
   const dividerElement = document.querySelector(".slider__divider");
   let imagesContainerWidth; //po uruchomieniu strony sie to uzupełni
+  let imagesContainerLeftOfset; //odsunięcie lewe krawędź slideraod ekranu
 
   function getOffset(clientX) {
     //funkcja potrzebna do funkcji move
@@ -32,14 +32,12 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function imitEvent() {
+    //zdarzenia muszą być po kolei
     handleElement.addEventListener("mousedown", () => {
       //zdarzenie mouse down na przyciśnięcia Prawego przycisku myszy
       drugging = true; //ustawiamy drugging na true, aby mozna było przesuwać
     });
-    handleElement.addEventListener("mouseup", () => {
-      //zdarzenie mouseup na podniesienia Prawego przycisku myszy
-      drugging = false; //ustawiamy drugging na falese, aby nie mozna było przesuwać
-    });
+    
     window.addEventListener("mousemove", (event) => {
       //tutaj przesuwanie jest na całym okienku, jeśli chcesz na przycisku to zamień window na handleElement
       //zdarzenie mousemove reaguje na przesuwanie myszy
@@ -48,9 +46,15 @@ document.addEventListener("DOMContentLoaded", () => {
         move(event.clientX);
       } //sprawdzamy w którym kierunku sie mysz przesuwa
     });
+    handleElement.addEventListener("mouseup", () => {
+      //zdarzenie mouseup na podniesienia Prawego przycisku myszy
+      if (drugging){drugging = false}; //ustawiamy drugging na falese, aby nie mozna było przesuwać
+    });
   }
   function adjustImagesSize() {
+    
     imagesContainerWidth = imagesContainerElement.offsetWidth; //zmienna dostęna globalnie
+    imagesContainerLeftOfset = imagesContainerElement.offsetLeft
     img1Element.style.width = imagesContainerWidth + "px";
     img2Element.style.width = imagesContainerWidth + "px";
   }
