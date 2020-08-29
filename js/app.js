@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
       //zdarzenie mouse down na przyciśnięcia Prawego przycisku myszy
       drugging = true; //ustawiamy drugging na true, aby mozna było przesuwać
     });
-    
+
     window.addEventListener("mousemove", (event) => {
       //tutaj przesuwanie jest na całym okienku, jeśli chcesz na przycisku to zamień window na handleElement
       //zdarzenie mousemove reaguje na przesuwanie myszy
@@ -48,13 +48,26 @@ document.addEventListener("DOMContentLoaded", () => {
     });
     handleElement.addEventListener("mouseup", () => {
       //zdarzenie mouseup na podniesienia Prawego przycisku myszy
-      if (drugging){drugging = false}; //ustawiamy drugging na falese, aby nie mozna było przesuwać
+      drugging = false; //ustawiamy drugging na falese, aby nie mozna było przesuwać
+    });
+
+    /*ZDARZENIA POD MOBILE */
+    handleElement.addEventListener("touchstart", () => {
+      drugging = true;
+    });
+    window.addEventListener("touchmove", (event) => {
+      if (drugging) {
+        move(event.touches[0].clientX); //pierwszy dotyk palcem jest zaliczany
+      }
+    });
+
+    handleElement.addEventListener("touchend", () => {
+      drugging = false;
     });
   }
   function adjustImagesSize() {
-    
     imagesContainerWidth = imagesContainerElement.offsetWidth; //zmienna dostęna globalnie
-    imagesContainerLeftOfset = imagesContainerElement.offsetLeft
+    imagesContainerLeftOfset = imagesContainerElement.offsetLeft;
     img1Element.style.width = imagesContainerWidth + "px";
     img2Element.style.width = imagesContainerWidth + "px";
   }
